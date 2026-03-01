@@ -1,13 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Configuration, OpenAIApi } from 'openai';
 import { supabaseClient } from '@/utils/supabaseClient';
+import getOpenAIBaseUrl from '../../utils/getOpenAIBaseUrl';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { sentenceList, apiKey } = req.body as any;
 
     const configuration = new Configuration({
-      apiKey
+      apiKey,
+      basePath: `${getOpenAIBaseUrl()}/v1`  || undefined
     });
     const openai = new OpenAIApi(configuration);
 
